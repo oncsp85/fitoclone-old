@@ -1,0 +1,6 @@
+.workout-list {
+  margin-top: 16px;
+  margin-right:   16px;
+  flex: 0 0 40%;
+  background-color: lightblue;
+}

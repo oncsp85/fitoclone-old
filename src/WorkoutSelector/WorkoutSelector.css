@@ -1,0 +1,14 @@
+.workout-selector {
+  background-color: lightgreen;
+  margin-top: 16px;
+  flex: 0 0 10%;
+}
+
+.workout-selector li {
+  list-style-type: none;
+  padding-left: 15px;
+}
+
+.workout-selector li, .workout-selector ul {
+  cursor: pointer;
+}
