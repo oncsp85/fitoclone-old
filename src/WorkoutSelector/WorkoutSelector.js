@@ -1,19 +1,39 @@
 import React from 'react'
 import './WorkoutSelector.css';
 
-const WorkoutSelector = () => {
-  
-  return (
-    <div className='workout-selector'>
-      <ul>2020
-        <li>Feb</li>
-        <li>Jan</li>
+const WorkoutSelector = ({ state, changeMonth, changeYear }) => {
+  const { currentYear, oldestYear, newestYear } = state;
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  let dateList = [];
+
+  // Make a <ul> for every year from newestYear down to oldestYear
+  for (let year = newestYear ; year >= oldestYear ; year--) {
+    dateList.push(
+      <ul key={ year.toString() } onClick={ () => changeYear(year) }> 
+        { year } 
       </ul>
-      <ul>2019</ul>
-      <ul>2018</ul>
-      <ul>2017</ul>
-      <ul>2016</ul>
-    </div>)
-  };
+    );
+
+    // When we hit the currentYear, make an <li> child for every month
+    if (year === currentYear) {
+      
+      // Make sure we don't add any months in the future
+      const today = new Date();
+      const currentMonth = year === today.getFullYear() ? today.getMonth() : 11;
+
+      for (let month = currentMonth ; month >= 0 ; month--) {
+        dateList.push(
+          <li key={ year.toString() + month.toString() }
+            onClick={ () => changeMonth(month) } > 
+            {months[month]} 
+          </li>
+        );
+      }
+    }
+  }
+
+return <div className='workout-selector'>{dateList}</div>
+};
 
 export default WorkoutSelector;
