@@ -8,7 +8,7 @@ class WorkoutView extends React.Component {
     super();
     const today = new Date();
     this.state = {
-      currentMonth: today.getMonth(),
+      currentMonth: today.getMonth() + 1,
       currentYear: today.getFullYear(),
       workouts: [],
       

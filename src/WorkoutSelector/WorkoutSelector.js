@@ -20,13 +20,14 @@ const WorkoutSelector = ({ state, changeMonth, changeYear }) => {
       
       // Make sure we don't add any months in the future
       const today = new Date();
-      const currentMonth = year === today.getFullYear() ? today.getMonth() : 11;
+      const currentMonth = 
+        year === today.getFullYear() ? today.getMonth() + 1 : 12;
 
-      for (let month = currentMonth ; month >= 0 ; month--) {
+      for (let month = currentMonth ; month > 0 ; month--) {
         dateList.push(
           <li key={ year.toString() + month.toString() }
             onClick={ () => changeMonth(month) } > 
-            {months[month]} 
+            {months[month-1]} 
           </li>
         );
       }
