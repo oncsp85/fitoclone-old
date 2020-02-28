@@ -5,7 +5,16 @@ import Workout from "../Workout/Workout"
 const WorkoutList = ({workouts}) => {
   return(
     <div className="workout-list">
-        { workouts.map(workout => <Workout workout={workout} />) }
+        { 
+          workouts.map(workout => {
+            return (
+              <Workout 
+                workout={workout}
+                key={workout.date + workout.workout_id}
+              />
+            );
+          })
+        }
     </div>
   );
 }

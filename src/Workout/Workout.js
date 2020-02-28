@@ -3,7 +3,7 @@ import './Workout.css';
 
 const Workout = ({workout}) => {
   return (
-    <div className="workout" key={workout.date + workout.workout_id}>
+    <div className="workout">
       <h2 className="date">
         {formatDate(workout.date)}
         {
