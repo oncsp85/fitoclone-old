@@ -10,6 +10,7 @@ class WorkoutView extends React.Component {
     this.state = {
       currentMonth: today.getMonth(),
       currentYear: today.getFullYear(),
+      workouts: [],
       
       // eventually this information will come from the database
       oldestYear: 2012,  
@@ -17,8 +18,26 @@ class WorkoutView extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchWorkouts();
+  }
+  
+  fetchWorkouts() {
+    const month = this.state.currentMonth;
+    const year = this.state.currentYear;
+    fetch(`http://localhost:3001/workouts?month=${month}&year=${year}`)
+      .then(response => response.json())
+      .then(workouts => {
+        this.setState({workouts: workouts})
+      })
+      .catch(err => {
+        console.log("Something's gone wrong");
+        console.log(err);
+      });
+  }
+
   changeCurrentMonth = (month) => {
-    this.setState({ currentMonth: month });
+    this.setState({ currentMonth: month }, () => this.fetchWorkouts());
   };
 
   changeCurrentYear = (year) => {
@@ -28,7 +47,7 @@ class WorkoutView extends React.Component {
   render() {
     return(
       <div className='workout-view'>
-        <WorkoutList />
+        <WorkoutList workouts={this.state.workouts} />
         <WorkoutSelector
           state={this.state}
           changeMonth={this.changeCurrentMonth}
