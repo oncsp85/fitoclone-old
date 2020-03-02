@@ -1,32 +1,43 @@
 import React from 'react'
 import './Workout.css';
 
-const Workout = ({workout}) => {
-  return (
-    <div className="workout">
-      <h2 className="date">
-        {formatDate(workout.date)}
-        {
-          workout.exercises
-            .sort((a, b) => a.exercise_id - b.exercise_id)
-            .map(exercise => renderExercise(exercise))
-        }
-      </h2>
-    </div>
-  );
-}
-
+// Helper function to format dates, e.g. "2020-02-01" -> "Saturday, 1 Feb 2020"
 const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString("en-GB", {
     weekday: "long", day: "numeric", month: "short", year:"numeric"
   });
 }
 
+// Helper function to convert seconds to "HH:MM:SS".
 const formatTime = (seconds) => {
   const time = new Date(0,0,0,0,0, seconds);
   return time.toLocaleTimeString("en-GB", {
     hour12: false
   });
+}
+
+const Workout = ({workout}) => {
+  return (
+    <div className="workout">
+      <h2 className="date">
+        { formatDate(workout.date) }
+      </h2>
+      {
+        // Sort exercises by exercise_id, and render each one
+        workout.exercises
+          .sort((a, b) => a.exercise_id - b.exercise_id)
+          .map(exercise => renderExercise(exercise))
+      }
+      {
+        // If there is a workout comment, display it
+        workout.workout_comments ? 
+          <div className="workout-comments"> 
+            { workout.workout_comments } 
+          </div> : 
+          "" 
+      }
+    </div>
+  );
 }
 
 const renderCardioSet = (set) => {
@@ -115,20 +126,32 @@ const renderBodyweightSet = (set) => {
 }
 
 const renderExercise = (exercise) => {
+  // Determine what type of exercise this is
+  let renderFunc;
+  if (exercise.type === "weights")
+    renderFunc = renderWeightsSet;
+  else if (exercise.type === "bodyweight")
+    renderFunc = renderBodyweightSet;
+  else
+    renderFunc = renderCardioSet;
+
+  // Sort sets by set_id, then for each one call the relevant render method
   const setList = exercise.sets
     .sort((a, b) => a.set_id - b.set_id)
-    .map(set => {
-    if (exercise.type === "weights")
-      return renderWeightsSet(set);
-    else if (exercise.type === "bodyweight")
-      return renderBodyweightSet(set);
-    else
-      return renderCardioSet(set);
-  });
+    .map(set => renderFunc(set));
+  
   return (
     <div className="exercise" key={exercise.exercise_id}>
       <h3 className="exercise-name">{exercise.name}</h3>
-      {setList}
+      { setList }
+      {
+        // If there is a comment for the exercise, display it
+        exercise.exercise_comment ? 
+          <div className="exercise-comment">
+            { exercise.exercise_comment }
+          </div> : 
+          "" 
+      }
     </div>
   );
 }
