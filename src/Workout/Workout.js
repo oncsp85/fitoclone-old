@@ -8,12 +8,17 @@ const formatDate = (dateString) => {
   });
 }
 
-// Helper function to convert seconds to "HH:MM:SS".
-const formatTime = (seconds) => {
-  const time = new Date(0,0,0,0,0, seconds);
-  return time.toLocaleTimeString("en-GB", {
-    hour12: false
-  });
+// Helper function to convert time in seconds to "HH:MM:SS" format.
+const formatTime = (time) => {
+  const hours = Math.floor(time / 3600);
+  time %= 3600;
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  return (
+    String(hours).padStart(2, "0") + ":" + 
+    String(minutes).padStart(2, "0") + ":" + 
+    String(seconds).padStart(2, "0")
+  );
 }
 
 const Workout = ({workout}) => {
@@ -45,7 +50,7 @@ const renderCardioSet = (set) => {
   // Initial property; cardio exercises always have a time.
   const properties = [
     <span key="time">
-      {formatTime(time)}
+      { formatTime(Number(time)) }
     </span>
   ];
   // All of the following properties are optional
