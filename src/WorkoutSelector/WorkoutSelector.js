@@ -1,8 +1,11 @@
 import React from 'react'
 import './WorkoutSelector.css';
 
-const WorkoutSelector = ({ state, changeMonth, changeYear }) => {
-  const { currentYear, oldestYear, newestYear } = state;
+const WorkoutSelector = (
+    { oldestDate, lastClickedYear, changeMonth, changeYear }) => {
+  const newestYear = new Date().getFullYear();
+  const oldestYear = oldestDate.getFullYear();
+  const oldestMonth = oldestDate.getMonth();
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 
     'July', 'August', 'September', 'October', 'November', 'December'];
   let dateList = [];
@@ -15,15 +18,17 @@ const WorkoutSelector = ({ state, changeMonth, changeYear }) => {
       </ul>
     );
 
-    // When we hit the currentYear, make an <li> child for every month
-    if (year === currentYear) {
+    // When we hit the lastClickedYear, make an <li> child for every month
+    if (year === lastClickedYear) {
       
       // Make sure we don't add any months in the future
       const today = new Date();
       const currentMonth = 
         year === today.getFullYear() ? today.getMonth() + 1 : 12;
+      const endMonth = 
+        year === oldestYear ? oldestMonth + 1: 1;
 
-      for (let month = currentMonth ; month > 0 ; month--) {
+      for (let month = currentMonth ; month >= endMonth ; month--) {
         dateList.push(
           <li key={ year.toString() + month.toString() }
             onClick={ () => changeMonth(month) } > 

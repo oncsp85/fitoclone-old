@@ -8,13 +8,12 @@ class WorkoutView extends React.Component {
     super();
     const today = new Date();
     this.state = {
-      currentMonth: today.getMonth() + 1,
-      currentYear: today.getFullYear(),
+      currentDate: today,
+      lastClickedYear: today.getFullYear(),
       workouts: [],
       
       // eventually this information will come from the database
-      oldestYear: 2012,  
-      newestYear: 2020,
+      oldestWorkout: new Date(2012, 6, 0)
     };
   }
 
@@ -23,8 +22,8 @@ class WorkoutView extends React.Component {
   }
   
   fetchWorkouts() {
-    const month = this.state.currentMonth;
-    const year = this.state.currentYear;
+    const month = this.state.currentDate.getMonth() + 1;
+    const year = this.state.currentDate.getFullYear();
     fetch(`http://localhost:3001/workouts?month=${month}&year=${year}`)
       .then(response => response.json())
       .then(workouts => {
@@ -36,20 +35,28 @@ class WorkoutView extends React.Component {
       });
   }
 
+  // Change the currentDate to the just-clicked month and the last-clicked 
+  // year, and fetch the workouts from this new date.
   changeCurrentMonth = (month) => {
-    this.setState({ currentMonth: month }, () => this.fetchWorkouts());
+    const newDate = new Date(this.state.lastClickedYear, month, 0);
+    this.setState({ currentDate: newDate }, () => this.fetchWorkouts());
   };
 
+  // Change lastClickedYear so that WorkoutSelector knows which months to show
   changeCurrentYear = (year) => {
-    this.setState({ currentYear: year });
+    this.setState({ lastClickedYear: year });
   }
   
   render() {
     return(
       <div className='workout-view'>
-        <WorkoutList workouts={this.state.workouts} />
+        <WorkoutList 
+          workouts={this.state.workouts}
+          currentDate={this.state.currentDate}
+        />
         <WorkoutSelector
-          state={this.state}
+          lastClickedYear = {this.state.lastClickedYear}
+          oldestDate = {this.state.oldestWorkout}
           changeMonth={this.changeCurrentMonth}
           changeYear={this.changeCurrentYear}
         />
