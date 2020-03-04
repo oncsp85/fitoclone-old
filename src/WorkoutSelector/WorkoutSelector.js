@@ -39,7 +39,13 @@ const WorkoutSelector = (
     }
   }
 
-return <div className='workout-selector'>{dateList}</div>
+  return (
+    <div className='workout-selector'>
+      <div className="datelist">
+        { dateList }
+      </div>
+    </div>
+  );
 };
 
 export default WorkoutSelector;

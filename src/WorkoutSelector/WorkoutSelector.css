@@ -4,6 +4,10 @@
   padding-left: 20px;
 }
 
+.workout-selector .datelist {
+  position: fixed;
+}
+
 .workout-selector ul {
   padding: 5px 0 5px 0;
 }
