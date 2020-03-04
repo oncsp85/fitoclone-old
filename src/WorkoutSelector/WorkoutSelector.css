@@ -1,12 +1,16 @@
 .workout-selector {
-  background-color: lightgreen;
   margin-top: 16px;
   flex: 0 0 10%;
+  padding-left: 20px;
+}
+
+.workout-selector ul {
+  padding: 5px 0 5px 0;
 }
 
 .workout-selector li {
-  list-style-type: none;
   padding-left: 15px;
+  color: #8F9A9E;
 }
 
 .workout-selector li, .workout-selector ul {

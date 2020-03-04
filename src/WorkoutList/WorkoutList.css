@@ -1,6 +1,16 @@
 .workout-list {
   margin-top: 16px;
-  margin-right:   16px;
+  padding-right: 20px;
+  padding-left: 20px;
   flex: 0 0 40%;
-  background-color: lightblue;
+  border-left: 1px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+}
+
+h1 {
+  color: #2e393d;
+  padding-bottom: 20px;
+  font-size: 36px;
+  color: #65236B;
+  border-bottom: 1px solid #e1e1e1;
 }
