@@ -1,10 +1,9 @@
 import React from 'react';
 import WeightSets from './WeightSets';
 
-class Exercise extends React.Component {
+const Exercise  = ({exercise, updateWorkout}) => {
 
-  addNewSet = () => {
-    const exercise = this.props.exercise;
+  const addNewSet = () => {
     const sets = [
         ...exercise.sets, 
         {
@@ -13,44 +12,38 @@ class Exercise extends React.Component {
           reps: 0
         }  
       ];
-    this.props.updateWorkout({...exercise, sets: sets});
+    updateWorkout({...exercise, sets: sets});
   }
 
-  updateSingleSet = (newSet) => {
-    const exercise = this.props.exercise;
+  const updateSingleSet = (newSet) => {
     const sets = [...exercise.sets];
     sets[newSet.set_id - 1] = newSet;
-    this.props.updateWorkout({...exercise, sets: sets});
-  }
-  
-  changeName = (e) => {
-    const exercise = {...this.props.exercise};
-    exercise.name = e.target.value;
-    this.props.updateWorkout(exercise);
+    updateWorkout({...exercise, sets: sets});
   }
 
-  render() {
-    return(
-      <div>
-        <label>Exercise Name</label>
-        <input type="text" onBlur={ this.changeName } />
-        <button type="button" onClick= { this.addNewSet }>
-          Add New Set
-        </button>
-        {
-          this.props.exercise.sets.map(set => {
-            return (
-              <WeightSets 
-                key={set.set_id} 
-                set={set}
-                updateExercise={this.updateSingleSet}
-              />
-            )
-          })
-        }
-      </div>
-    );
-  }
+  return(
+    <div>
+      <label>Exercise Name</label>
+      <input 
+        type="text" 
+        onBlur={ (e) => updateWorkout({...exercise, name: e.target.value}) } 
+      />
+      <button type="button" onClick= { addNewSet }>
+        Add New Set
+      </button>
+      {
+        exercise.sets.map(set => {
+          return (
+            <WeightSets 
+              key={set.set_id} 
+              set={set}
+              updateExercise={updateSingleSet}
+            />
+          )
+        })
+      }
+    </div>
+  );
 }
 
 export default Exercise;
