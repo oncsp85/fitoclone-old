@@ -12,17 +12,19 @@ const Workout = () => {
   const [ exercises, updateExercises ] = useState([]);
   const [ date, changeDate ] = useState(today);
 
-  const addNewExercise = () => {
+  // Add a new blank exercise
+  const addNewExercise = (type) => {
     updateExercises([
       ...exercises, {
         exercise_id: exercises.length + 1,
         name: "",
-        type: "weights",
+        type: type,
         sets: []
       }
     ]);
   }
 
+  // Called by child component when the exercise has changed, updates the state
   const updateSingleExercise = (newExercise) => {
     const exercisesCopy = [...exercises];
     exercisesCopy[newExercise.exercise_id - 1] = newExercise;
@@ -38,8 +40,14 @@ const Workout = () => {
         max={ today }
         onChange={ (e) => changeDate(e.target.value) }
       />
-      <button type="button" onClick={ addNewExercise } >
-        Add New Exercise
+      <button type="button" onClick={ () => addNewExercise("weights") } >
+        Add New Weight-lifting Exercise
+      </button>
+      <button type="button" onClick={ () => addNewExercise("cardio") } >
+        Add New Cardio Exercise
+      </button>
+      <button type="button" onClick={ () => addNewExercise("bodyweight") } >
+        Add New Bodyweight Exercise
       </button>
       { 
         exercises.map(exercise => {

@@ -1,22 +1,11 @@
 import React from 'react';
 
-const WeightSets = ({set, updateExercise}) => {
+const BodyweightSet = ({set, updateExercise}) => {
 
   return (
     <>
       <div>Set #{set.set_id}</div>
       <div>
-        <label>Weight</label>
-        <input type="number" 
-          defaultValue={set.weight.value} 
-          onBlur={ (e) => { 
-              const newWeight = {
-                weight: { value: e.target.value, unit: set.weight.unit }
-              };
-              updateExercise({...set, ...newWeight});
-            }
-          }
-        />
         <label>Reps</label>
         <input type="number" 
           defaultValue={set.reps}
@@ -33,4 +22,4 @@ const WeightSets = ({set, updateExercise}) => {
   );
 }
 
-export default WeightSets;
+export default BodyweightSet;
