@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Exercise from './Exercise';
 
-const Workout = () => {
+const Workout = ({ changeRoute }) => {
 
   const today = new Date().toISOString().substring(0, 10);
   // set the min value for the date picker to be 1 month ago
@@ -29,6 +29,26 @@ const Workout = () => {
     const exercisesCopy = [...exercises];
     exercisesCopy[newExercise.exercise_id - 1] = newExercise;
     updateExercises(exercisesCopy);
+  }
+
+  const submitExercise = async () => {
+    // Count the number of workouts on the same day to get the workoutID
+    // PLACEHOLDER, FOR NOW DEFAULT TO 1
+    const workoutID = 1;
+
+    // Make a new workout object from the exercises array in state
+    const workout = {
+      workout_id: workoutID,
+      date: date,
+      exercises: exercises
+    };
+
+    // Pass workout to API, wait for a response, then redirect to workout view
+    await fetch("http://localhost:3001/workouts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(workout)
+    }).then(() => changeRoute("show"));
   }
 
   return(
@@ -62,7 +82,7 @@ const Workout = () => {
       }
       <br />
       <button type="button"
-        onClick={() => console.log(exercises)}
+        onClick={ submitExercise }
       >Submit Workout</button>
     </form>
   );
