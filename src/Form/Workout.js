@@ -34,11 +34,19 @@ const Workout = ({ changeRoute }) => {
   const submitExercise = async () => {
     // Count the number of workouts on the same day to get the workoutID
     // PLACEHOLDER, FOR NOW DEFAULT TO 1
-    const workoutID = 1;
+    const workoutDate = new Date(date);
+    const numberOfWorkouts = await fetch("http://localhost:3001/workouts?" +
+        `day=${workoutDate.getDate()}` + 
+        `&month=${workoutDate.getMonth()+1}` +
+        `&year=${workoutDate.getFullYear()}`)
+      .then(response => response.json())
+      .then(workouts => workouts.length);
+
+    console.log(numberOfWorkouts);
 
     // Make a new workout object from the exercises array in state
     const workout = {
-      workout_id: workoutID,
+      workout_id: numberOfWorkouts + 1,
       date: date,
       exercises: exercises
     };
