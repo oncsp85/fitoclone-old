@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
 
-  const [ route, changeRoute ] = useState("create");
+  const [ route, changeRoute ] = useState("show");
   let display;
 
   if (route === "create")
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar changeRoute={changeRoute} />
       { display }
     </div>
   );

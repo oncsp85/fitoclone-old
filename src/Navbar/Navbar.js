@@ -1,10 +1,21 @@
 import React from 'react';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ changeRoute }) => {
   return(
     <nav className='nav-bar'>
-      This will be the Navbar component
+      <button 
+        type="button"
+        onClick={ () => changeRoute("show") }
+      >
+        Workout List
+      </button>
+      <button 
+        type="button"
+        onClick={ () => changeRoute("create") }
+      >
+        Track New Workout
+      </button>
     </nav>
   );
 };
