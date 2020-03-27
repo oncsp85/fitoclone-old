@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CardioSet = ({set, updateExercise}) => {
+const CardioSet = ({set, updateExercise, deleteSet}) => {
 
   const changeTime = (value, unit) => {
     let newTime;
@@ -20,26 +20,26 @@ const CardioSet = ({set, updateExercise}) => {
       <div>
         <label>Time</label>
         <input type="number"
-          defaultValue="0"
+          value="0"
           placeholder="hh" 
-          onBlur={ (e) => changeTime(e.target.value, "hours") }
+          onChange={ (e) => changeTime(e.target.value, "hours") }
         />:
         <input type="number"
-          defaultValue="0"
+          value="0"
           placeholder="mm" 
           max="59"
-          onBlur={ (e) => changeTime(e.target.value, "mins") }
+          onChange={ (e) => changeTime(e.target.value, "mins") }
         />:
         <input type="number"
-          defaultValue="0"
+          value="0"
           placeholder="ss" 
           max="59"
-          onBlur={ (e) => changeTime(e.target.value, "secs") }
+          onChange={ (e) => changeTime(e.target.value, "secs") }
         />
         <label>Distance</label>
         <input type="number" 
-          defaultValue={set.reps}
-          onBlur={ (e) => {
+          value={set.reps}
+          onChange={ (e) => {
               const newDistance = { 
                 distance: { value: e.target.value, unit: "mi" } 
               };
@@ -47,7 +47,7 @@ const CardioSet = ({set, updateExercise}) => {
             }
           }
         />
-        <button type="button" onClick={() => console.log(set)}
+        <button type="button" onClick={() => deleteSet(set.set_id)}
         >Delete Set</button>
       </div>
     </>

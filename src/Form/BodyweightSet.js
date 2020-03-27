@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BodyweightSet = ({set, updateExercise}) => {
+const BodyweightSet = ({set, updateExercise, deleteSet}) => {
 
   return (
     <>
@@ -8,14 +8,14 @@ const BodyweightSet = ({set, updateExercise}) => {
       <div>
         <label>Reps</label>
         <input type="number" 
-          defaultValue={set.reps}
-          onBlur={ (e) => {
+          value={set.reps}
+          onChange={ (e) => {
               const newReps = { reps: e.target.value };
               updateExercise({...set, ...newReps});
             }
           }
         />
-        <button type="button" onClick={() => console.log(set)}
+        <button type="button" onClick={() => deleteSet(set.set_id)}
         >Delete Set</button>
       </div>
     </>

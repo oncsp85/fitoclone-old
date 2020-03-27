@@ -24,6 +24,28 @@ const Workout = ({ changeRoute }) => {
     ]);
   }
 
+  // Deletes an exercise
+  const deleteExercise = (exerciseID) => {
+    const temp = [...exercises];
+    for (let i = exerciseID ; i < temp.length ; i++) {
+      temp[i-1] = temp[i];
+      temp[i-1].exercise_id--;
+    }
+    updateExercises(temp.slice(0, -1));
+  }
+
+  // Deletes a set from a given exercise
+  const deleteExerciseSet = (exerciseID, setID) => {
+    const temp = [...exercises];
+    const sets = exercises[exerciseID-1].sets;
+    for (let i = setID ; i < sets.length ; i++) {
+      sets[i-1] = sets[i];
+      sets[i-1].set_id--;
+    }
+    temp[exerciseID-1].sets = sets.slice(0, -1);
+    updateExercises(temp);
+  }
+
   // Called by child component when the exercise has changed, updates the state
   const updateSingleExercise = (newExercise) => {
     const exercisesCopy = [...exercises];
@@ -41,8 +63,6 @@ const Workout = ({ changeRoute }) => {
         `&year=${workoutDate.getFullYear()}`)
       .then(response => response.json())
       .then(workouts => workouts.length);
-
-    console.log(numberOfWorkouts);
 
     // Make a new workout object from the exercises array in state
     const workout = {
@@ -84,6 +104,8 @@ const Workout = ({ changeRoute }) => {
               key={ exercise.exercise_id } 
               exercise={ exercise }
               updateWorkout={ updateSingleExercise }
+              deleteExercise={ deleteExercise }
+              deleteExerciseSet={ deleteExerciseSet }
             />
           );
         }) 

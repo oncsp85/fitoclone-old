@@ -3,7 +3,8 @@ import WeightSet from './WeightSet';
 import CardioSet from './CardioSet';
 import BodyweightSet from './BodyweightSet';
 
-const Exercise  = ({exercise, updateWorkout}) => {
+const Exercise  = (props) => {
+  const {exercise, updateWorkout, deleteExercise, deleteExerciseSet} = props;
 
   // Adds a new blank set (will have a different format depending on its type)
   const addNewSet = () => {
@@ -24,6 +25,11 @@ const Exercise  = ({exercise, updateWorkout}) => {
     updateWorkout({...exercise, sets: sets});
   }
 
+  // Deletes a set
+  const deleteSet = (id) => {
+    deleteExerciseSet(exercise.exercise_id, id);
+  }
+
   // Called by child element when the set has changed, updates Workout's state
   const updateSingleSet = (newSet) => {
     const sets = [...exercise.sets];
@@ -39,7 +45,9 @@ const Exercise  = ({exercise, updateWorkout}) => {
         <WeightSet 
           key={set.set_id} 
           set={set} 
-          updateExercise={updateSingleSet}/>
+          updateExercise={updateSingleSet}
+          deleteSet={deleteSet}
+        />
       );
     });
   } else if (exercise.type === "cardio") {
@@ -48,7 +56,9 @@ const Exercise  = ({exercise, updateWorkout}) => {
         <CardioSet
           key={set.set_id} 
           set={set} 
-          updateExercise={updateSingleSet}/>
+          updateExercise={updateSingleSet}
+          deleteSet={deleteSet}
+        />
       );
     });
   } else {
@@ -57,7 +67,9 @@ const Exercise  = ({exercise, updateWorkout}) => {
         <BodyweightSet 
           key={set.set_id} 
           set={set} 
-          updateExercise={updateSingleSet}/>
+          updateExercise={updateSingleSet}
+          deleteSet={deleteSet}
+        />
       );
     });
   }
@@ -66,11 +78,18 @@ const Exercise  = ({exercise, updateWorkout}) => {
     <div>
       <label>Exercise Name</label>
       <input 
-        type="text" 
-        onBlur={ (e) => updateWorkout({...exercise, name: e.target.value}) } 
+        type="text"
+        value={exercise.name}
+        onChange={ (e) => updateWorkout({...exercise, name: e.target.value}) } 
       />
       <button type="button" onClick= { addNewSet }>
         Add New Set
+      </button>
+      <button 
+        type="button" 
+        onClick= { () => deleteExercise(exercise.exercise_id) }
+      >
+        Delete Exercise
       </button>
       { setList }
     </div>
