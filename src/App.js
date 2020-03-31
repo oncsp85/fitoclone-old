@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar/Navbar';
 import WorkoutView from './Feed/WorkoutView/WorkoutView';
-import WorkoutForm from './Form/Workout';
+import WorkoutForm from './Form/WorkoutForm';
 import './App.css';
 
 function App() {
 
-  const [ route, changeRoute ] = useState("show");
+  const [ route, changeRoute ] = useState("create");
   let display;
 
   if (route === "create")

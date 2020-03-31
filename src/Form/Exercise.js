@@ -76,12 +76,7 @@ const Exercise  = (props) => {
 
   return(
     <div>
-      <label>Exercise Name</label>
-      <input 
-        type="text"
-        value={exercise.name}
-        onChange={ (e) => updateWorkout({...exercise, name: e.target.value}) } 
-      />
+      <label>{ exercise.name }</label>
       <button type="button" onClick= { addNewSet }>
         Add New Set
       </button>
@@ -91,7 +86,7 @@ const Exercise  = (props) => {
       >
         Delete Exercise
       </button>
-      { setList }
+      <div>{ setList }</div>
     </div>
   );
 }

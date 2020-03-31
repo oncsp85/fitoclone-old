@@ -1,59 +1,16 @@
 import React, { useState } from 'react';
 import Exercise from './Exercise';
 
-const Workout = ({ changeRoute }) => {
+const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerciseSet, changeRoute }) => {
 
   const today = new Date().toISOString().substring(0, 10);
   // set the min value for the date picker to be 1 month ago
   let minDate = new Date();
   minDate.setMonth(minDate.getMonth() - 1);
   minDate = minDate.toISOString().substring(0, 10);
-
-  const [ exercises, updateExercises ] = useState([]);
   const [ date, changeDate ] = useState(today);
 
-  // Add a new blank exercise
-  const addNewExercise = (type) => {
-    updateExercises([
-      ...exercises, {
-        exercise_id: exercises.length + 1,
-        name: "",
-        type: type,
-        sets: []
-      }
-    ]);
-  }
-
-  // Deletes an exercise
-  const deleteExercise = (exerciseID) => {
-    const temp = [...exercises];
-    for (let i = exerciseID ; i < temp.length ; i++) {
-      temp[i-1] = temp[i];
-      temp[i-1].exercise_id--;
-    }
-    updateExercises(temp.slice(0, -1));
-  }
-
-  // Deletes a set from a given exercise
-  const deleteExerciseSet = (exerciseID, setID) => {
-    const temp = [...exercises];
-    const sets = exercises[exerciseID-1].sets;
-    for (let i = setID ; i < sets.length ; i++) {
-      sets[i-1] = sets[i];
-      sets[i-1].set_id--;
-    }
-    temp[exerciseID-1].sets = sets.slice(0, -1);
-    updateExercises(temp);
-  }
-
-  // Called by child component when the exercise has changed, updates the state
-  const updateSingleExercise = (newExercise) => {
-    const exercisesCopy = [...exercises];
-    exercisesCopy[newExercise.exercise_id - 1] = newExercise;
-    updateExercises(exercisesCopy);
-  }
-
-  const submitExercise = async () => {
+  const submitWorkout = async () => {
     // Count the number of workouts on the same day to get the workoutID
     // PLACEHOLDER, FOR NOW DEFAULT TO 1
     const workoutDate = new Date(date);
@@ -88,7 +45,7 @@ const Workout = ({ changeRoute }) => {
         max={ today }
         onChange={ (e) => changeDate(e.target.value) }
       />
-      <button type="button" onClick={ () => addNewExercise("weights") } >
+      {/* <button type="button" onClick={ () => addNewExercise("weights") } >
         Add New Weight-lifting Exercise
       </button>
       <button type="button" onClick={ () => addNewExercise("cardio") } >
@@ -96,7 +53,7 @@ const Workout = ({ changeRoute }) => {
       </button>
       <button type="button" onClick={ () => addNewExercise("bodyweight") } >
         Add New Bodyweight Exercise
-      </button>
+      </button> */}
       { 
         exercises.map(exercise => {
           return (
@@ -112,7 +69,7 @@ const Workout = ({ changeRoute }) => {
       }
       <br />
       <button type="button"
-        onClick={ submitExercise }
+        onClick={ submitWorkout }
       >Submit Workout</button>
     </form>
   );
