@@ -14,7 +14,10 @@ const WorkoutForm = () => {
         exercise_id: exercises.length + 1,
         name: exercise.name,
         type: exercise.type,
-        sets: []
+        sets: [],
+        // Temporarily store field list in the object, to be removed later
+        required: exercise.required,
+        optional: exercise.optional
       }
     ]);
   }
@@ -50,7 +53,7 @@ const WorkoutForm = () => {
 
   return (
     <div className='workout-form'>
-      <ExercisePicker exercises={exerciseList} addExercise={addExercise}/>
+      <ExercisePicker addExercise={addExercise}/>
       <Workout 
         exercises={exercises}
         updateSingleExercise={updateSingleExercise}

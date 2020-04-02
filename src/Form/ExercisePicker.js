@@ -5,17 +5,17 @@ const ExercisePicker = ({ addExercise }) => {
   // Field-list for allowed exercises. Incomplete - just for testing. 
   // Eventually I'll need to flesh this out and put it in the DB
   const exercises = [
-    { name: "Squat", type: "weights", required: ["weight", "reps"], optional: ["rpe"]},
-    { name: "Bench", type: "weights", required: ["weight", "reps"], optional: ["rpe"]},
-    { name: "Row", type: "weights", required: ["weight", "reps"], optional: ["rpe"]},
-    { name: "OHP", type: "weights", required: ["weight", "reps"], optional: ["rpe"]},
-    { name: "DL", type: "weights", required: ["weight", "reps"], optional: ["rpe"]},
-    { name: "Running", type: "cardio", required: ["time", "distance"], optional: ["avhr", "pace"]},
-    { name: "Cycling", type: "cardio", required: ["time", "distance"], optional: ["avhr", "pace"]},
-    { name: "Running (stationary)", type: "cardio", required: ["time"], optional: ["distance", "avhr", "pace"]},
-    { name: "Cycling (stationary)", type: "cardio", required: ["time"], optional: ["distance", "avhr", "pace"]},
-    { name: "Chin-ups", type: "bodyweight", required: ["reps"], optional: ["weight"]},
-    { name: "Push-ups", type: "bodyweight", required: ["reps"], optional: ["weight"]}
+    { name: "Squat", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "Bench", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "Row", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "OHP", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "DL", type: "weights", required: [{name: "weight", runit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "Running", type: "cardio", required: ["time", {name: "distance", unit: "mi"}], optional: ["avhr", "pace"]},
+    { name: "Cycling", type: "cardio", required: ["time", {name: "distance", unit: "mi"}], optional: ["avhr", "pace"]},
+    { name: "Running (stationary)", type: "cardio", required: ["time"], optional: [{name: "distance", unit: "mi"}, "avhr", "pace"]},
+    { name: "Cycling (stationary)", type: "cardio", required: ["time"], optional: [{name: "distance", unit: "mi"}, "avhr", "pace"]},
+    { name: "Chin-ups", type: "bodyweight", required: ["reps"], optional: [{name: "weight", unit: "kg"}]},
+    { name: "Push-ups", type: "bodyweight", required: ["reps"], optional: [{name: "weight", unit: "kg"}]}
   ];
 
   return (

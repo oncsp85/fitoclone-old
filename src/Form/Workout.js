@@ -12,7 +12,6 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
 
   const submitWorkout = async () => {
     // Count the number of workouts on the same day to get the workoutID
-    // PLACEHOLDER, FOR NOW DEFAULT TO 1
     const workoutDate = new Date(date);
     const numberOfWorkouts = await fetch("http://localhost:3001/workouts?" +
         `day=${workoutDate.getDate()}` + 
@@ -21,11 +20,18 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
       .then(response => response.json())
       .then(workouts => workouts.length);
 
+    // Remove the field lists from the exercise object
+    const exercisesCopy = [ ...exercises ];
+    exercisesCopy.forEach(exercise => {
+      delete exercise.required;
+      delete exercise.optional;
+    });
+
     // Make a new workout object from the exercises array in state
     const workout = {
       workout_id: numberOfWorkouts + 1,
       date: date,
-      exercises: exercises
+      exercises: exercisesCopy
     };
 
     // Pass workout to API, wait for a response, then redirect to workout view

@@ -1,7 +1,5 @@
 import React from 'react';
-import WeightSet from './WeightSet';
-import CardioSet from './CardioSet';
-import BodyweightSet from './BodyweightSet';
+import Set from './Set';
 
 const Exercise  = (props) => {
   const {exercise, updateWorkout, deleteExercise, deleteExerciseSet} = props;
@@ -9,15 +7,11 @@ const Exercise  = (props) => {
   // Adds a new blank set (will have a different format depending on its type)
   const addNewSet = () => {
     let newSet = { set_id: exercise.sets.length + 1 };
-    if (exercise.type === "cardio")
-      newSet.time = 0;
-    else {
-      newSet.reps = 0;
-      if (exercise.type === "weights") {
-        newSet = {
-          ...newSet,
-          weight: { value: 0, unit: "kg" },
-        }
+    for (let requiredField of exercise.required) {
+      if (typeof requiredField === "object") {
+        newSet[requiredField.name] = { value: 0, unit: requiredField.unit };
+      } else {
+        newSet[requiredField] = 0;
       }
     }
     const sets = [...exercise.sets, newSet];
@@ -37,42 +31,19 @@ const Exercise  = (props) => {
     updateWorkout({...exercise, sets: sets});
   }
 
-  // Determine which "Set" component we need
+  // Make a new Set component for every set in the exercise
   let setList;
-  if (exercise.type === "weights") {
-    setList = exercise.sets.map(set => {
-      return ( 
-        <WeightSet 
-          key={set.set_id} 
-          set={set} 
-          updateExercise={updateSingleSet}
-          deleteSet={deleteSet}
-        />
-      );
-    });
-  } else if (exercise.type === "cardio") {
-    setList = exercise.sets.map(set => {
-      return ( 
-        <CardioSet
-          key={set.set_id} 
-          set={set} 
-          updateExercise={updateSingleSet}
-          deleteSet={deleteSet}
-        />
-      );
-    });
-  } else {
-    setList = exercise.sets.map(set => {
-      return ( 
-        <BodyweightSet 
-          key={set.set_id} 
-          set={set} 
-          updateExercise={updateSingleSet}
-          deleteSet={deleteSet}
-        />
-      );
-    });
-  }
+  setList = exercise.sets.map(set => {
+    return ( 
+      <Set 
+        key={set.set_id} 
+        set={set} 
+        required={exercise.required}
+        updateExercise={updateSingleSet}
+        deleteSet={deleteSet}
+      />
+    );
+  });
 
   return(
     <div>
