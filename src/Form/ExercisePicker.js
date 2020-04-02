@@ -9,7 +9,7 @@ const ExercisePicker = ({ addExercise }) => {
     { name: "Bench", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
     { name: "Row", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
     { name: "OHP", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
-    { name: "DL", type: "weights", required: [{name: "weight", runit: "kg"}, "reps"], optional: ["rpe"]},
+    { name: "DL", type: "weights", required: [{name: "weight", unit: "kg"}, "reps"], optional: ["rpe"]},
     { name: "Running", type: "cardio", required: ["time", {name: "distance", unit: "mi"}], optional: ["avhr", "pace"]},
     { name: "Cycling", type: "cardio", required: ["time", {name: "distance", unit: "mi"}], optional: ["avhr", "pace"]},
     { name: "Running (stationary)", type: "cardio", required: ["time"], optional: [{name: "distance", unit: "mi"}, "avhr", "pace"]},

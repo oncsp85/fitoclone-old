@@ -13,12 +13,17 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
   const submitWorkout = async () => {
     // Count the number of workouts on the same day to get the workoutID
     const workoutDate = new Date(date);
-    const numberOfWorkouts = await fetch("http://localhost:3001/workouts?" +
-        `day=${workoutDate.getDate()}` + 
-        `&month=${workoutDate.getMonth()+1}` +
-        `&year=${workoutDate.getFullYear()}`)
+    const url = "http://localhost:3001/workouts?" +
+    `day=${workoutDate.getDate()}` + 
+    `&month=${workoutDate.getMonth()+1}` +
+    `&year=${workoutDate.getFullYear()}`;
+    console.log(url);
+    const numberOfWorkouts = await fetch(url)
       .then(response => response.json())
-      .then(workouts => workouts.length);
+      .then(workouts => {
+        console.log(workouts);
+        return workouts.length
+      });
 
     // Remove the field lists from the exercise object
     const exercisesCopy = [ ...exercises ];
@@ -51,15 +56,6 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
         max={ today }
         onChange={ (e) => changeDate(e.target.value) }
       />
-      {/* <button type="button" onClick={ () => addNewExercise("weights") } >
-        Add New Weight-lifting Exercise
-      </button>
-      <button type="button" onClick={ () => addNewExercise("cardio") } >
-        Add New Cardio Exercise
-      </button>
-      <button type="button" onClick={ () => addNewExercise("bodyweight") } >
-        Add New Bodyweight Exercise
-      </button> */}
       { 
         exercises.map(exercise => {
           return (

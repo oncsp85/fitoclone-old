@@ -3,7 +3,7 @@ import ExercisePicker from './ExercisePicker';
 import Workout from './Workout';
 import './WorkoutForm.css';
 
-const WorkoutForm = () => {
+const WorkoutForm = ({ changeRoute }) => {
 
   const [ exercises, updateExercises ] = useState([]);
 
@@ -59,6 +59,7 @@ const WorkoutForm = () => {
         updateSingleExercise={updateSingleExercise}
         deleteExercise={deleteExercise}
         deleteExerciseSet={deleteExerciseSet}
+        changeRoute={changeRoute}
       />
       {/* For testing only */}
       <button type="button"
