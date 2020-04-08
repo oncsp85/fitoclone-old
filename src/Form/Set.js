@@ -1,4 +1,5 @@
 import React from 'react';
+import './Set.css';
 
 const Set = ({ set, required, updateExercise, deleteSet }) => {
   let output = [<div key={set.set_id}>Set #{set.set_id}</div>];
@@ -40,12 +41,12 @@ const Set = ({ set, required, updateExercise, deleteSet }) => {
   }
 
   return (
-    <>
+    <div className="set">
       { output }
       <button type="button" onClick={() => deleteSet(set.set_id)}>
         Delete Set
       </button>
-    </>
+    </div>
   );
 }
 

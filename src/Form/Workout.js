@@ -48,32 +48,35 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
   }
 
   return(
-    <form>
-      <label>Workout Date</label>
-      <input type="date" 
-        value={ date }
-        min = { minDate }
-        max={ today }
-        onChange={ (e) => changeDate(e.target.value) }
-      />
-      { 
-        exercises.map(exercise => {
-          return (
-            <Exercise 
-              key={ exercise.exercise_id } 
-              exercise={ exercise }
-              updateWorkout={ updateSingleExercise }
-              deleteExercise={ deleteExercise }
-              deleteExerciseSet={ deleteExerciseSet }
-            />
-          );
-        }) 
-      }
-      <br />
-      <button type="button"
-        onClick={ submitWorkout }
-      >Submit Workout</button>
-    </form>
+    <div className="form-workout">
+      <h1>Create New Workout</h1>
+      <form>
+        <label>Workout Date</label>
+        <input type="date" 
+          value={ date }
+          min = { minDate }
+          max={ today }
+          onChange={ (e) => changeDate(e.target.value) }
+        />
+        { 
+          exercises.map(exercise => {
+            return (
+              <Exercise 
+                key={ exercise.exercise_id } 
+                exercise={ exercise }
+                updateWorkout={ updateSingleExercise }
+                deleteExercise={ deleteExercise }
+                deleteExerciseSet={ deleteExerciseSet }
+              />
+            );
+          }) 
+        }
+        <br />
+        <button type="button"
+          onClick={ submitWorkout }
+        >Submit Workout</button>
+      </form>
+    </div>
   );
 }
 

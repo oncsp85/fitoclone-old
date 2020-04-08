@@ -52,20 +52,22 @@ const WorkoutForm = ({ changeRoute }) => {
   }
 
   return (
-    <div className='workout-form'>
-      <ExercisePicker addExercise={addExercise}/>
-      <Workout 
-        exercises={exercises}
-        updateSingleExercise={updateSingleExercise}
-        deleteExercise={deleteExercise}
-        deleteExerciseSet={deleteExerciseSet}
-        changeRoute={changeRoute}
-      />
-      {/* For testing only */}
-      <button type="button"
-        onClick={ () => console.log(exercises) }
-      >Print to Console</button>
+    <>
+      <div className='form'>
+        <ExercisePicker addExercise={addExercise}/>
+        <Workout 
+          exercises={exercises}
+          updateSingleExercise={updateSingleExercise}
+          deleteExercise={deleteExercise}
+          deleteExerciseSet={deleteExerciseSet}
+          changeRoute={changeRoute}
+        />
+        {/* For testing only */}
+        {/* <button type="button"
+          onClick={ () => console.log(exercises) }
+        >Print to Console</button> */}
       </div>
+    </>
   );
 }
 

@@ -19,17 +19,23 @@ const ExercisePicker = ({ addExercise }) => {
   ];
 
   return (
-    <ul>
-      {
-        exercises.map(exercise => {
-          return (
-            <li key={exercise.name} onClick={ () => addExercise(exercise) } >
-              { exercise.name }
-            </li>
-          );
-        })
-      }
-    </ul>
+    <div className="picker">
+      <ul>
+        {
+          exercises.map(exercise => {
+            return (
+              <li 
+                key={exercise.name} 
+                className="picker-exercise"
+                onClick={ () => addExercise(exercise) } 
+              >
+                { exercise.name }
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
   );
 }
 

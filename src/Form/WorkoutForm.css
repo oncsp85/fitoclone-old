@@ -1,4 +1,31 @@
-.workout-form {
+.form {
   display: flex;
   justify-content: center;
+  padding-top: 20px;
+}
+
+.form .set {
+  margin-top: 10px;
+}
+
+.picker {
+  flex: 0 0 10%;
+  position: sticky;
+  top: 10px;
+  height: 90vh;
+}
+
+.form-workout {
+  flex: 0 0 40%;
+  border-left: 1px solid #e1e1e1;
+  padding-left: 20px;
+}
+
+.form-workout form {
+  padding-top: 20px;
+}
+
+.form-workout input {
+  margin: 5px;
+  height: 25px;
 }

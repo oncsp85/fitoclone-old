@@ -46,7 +46,7 @@ const Exercise  = (props) => {
   });
 
   return(
-    <div>
+    <div className="set">
       <label>{ exercise.name }</label>
       <button type="button" onClick= { addNewSet }>
         Add New Set
