@@ -8,11 +8,7 @@ const Exercise  = (props) => {
   const addNewSet = () => {
     let newSet = { set_id: exercise.sets.length + 1 };
     for (let requiredField of exercise.required) {
-      if (typeof requiredField === "object") {
         newSet[requiredField.name] = { value: 0, unit: requiredField.unit };
-      } else {
-        newSet[requiredField] = 0;
-      }
     }
     const sets = [...exercise.sets, newSet];
 
