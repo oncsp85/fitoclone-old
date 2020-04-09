@@ -62,10 +62,6 @@ const WorkoutForm = ({ changeRoute }) => {
           deleteExerciseSet={deleteExerciseSet}
           changeRoute={changeRoute}
         />
-        {/* For testing only */}
-        {/* <button type="button"
-          onClick={ () => console.log(exercises) }
-        >Print to Console</button> */}
       </div>
     </>
   );

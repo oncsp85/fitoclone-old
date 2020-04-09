@@ -17,7 +17,6 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
     `day=${workoutDate.getDate()}` + 
     `&month=${workoutDate.getMonth()+1}` +
     `&year=${workoutDate.getFullYear()}`;
-    console.log(url);
     const numberOfWorkouts = await fetch(url)
       .then(response => response.json())
       .then(workouts => {
@@ -25,8 +24,9 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
         return workouts.length
       });
 
-    // Remove the field lists from the exercise object
     const exercisesCopy = [ ...exercises ];
+    
+    // Remove the field lists from the exercise object
     exercisesCopy.forEach(exercise => {
       delete exercise.required;
       delete exercise.optional;
@@ -45,6 +45,17 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(workout)
     }).then(() => changeRoute("show"));
+  }
+
+  // FOR TESTING WITHOUT CONNECTING TO DB, REMOVE LATER
+  const submitWorkout2 = () => {
+    const workout = {
+      workout_id: 1,
+      date: date,
+      exercises: exercises
+    };
+
+    console.log(workout);
   }
 
   return(
@@ -73,7 +84,7 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
         }
         <br />
         <button type="button"
-          onClick={ submitWorkout }
+          onClick={ submitWorkout2 }  // CHANGE BACK TO submitWorkout WHEN DONE TESTING
         >Submit Workout</button>
       </form>
     </div>
