@@ -20,14 +20,25 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
     const numberOfWorkouts = await fetch(url)
       .then(response => response.json())
       .then(workouts => {
-        console.log(workouts);
         return workouts.length
       });
 
     const exercisesCopy = [ ...exercises ];
     
-    // Remove the field lists from the exercise object
     exercisesCopy.forEach(exercise => {
+      // If exercise has hours/mins/secs, convert to a single time property
+      if ("hours" in exercise.sets[0]) {
+        exercise.sets.forEach(set => {
+          const time = Number(set["hours"]) * 3600 
+            + Number(set["mins"]) * 60 + Number(set["secs"]);
+          set["time"] = time;
+          delete set.hours;
+          delete set.mins;
+          delete set.secs;
+        });
+      }
+    
+      // Remove the field lists from the exercise object
       delete exercise.required;
       delete exercise.optional;
     });
@@ -84,7 +95,7 @@ const Workout = ({ exercises, updateSingleExercise, deleteExercise, deleteExerci
         }
         <br />
         <button type="button"
-          onClick={ submitWorkout2 }  // CHANGE BACK TO submitWorkout WHEN DONE TESTING
+          onClick={ submitWorkout }  // CHANGE BACK TO submitWorkout WHEN DONE TESTING
         >Submit Workout</button>
       </form>
     </div>
