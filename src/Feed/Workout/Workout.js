@@ -21,11 +21,14 @@ const formatTime = (time) => {
   );
 }
 
-const Workout = ({workout}) => {
+const Workout = ({workout, editWorkout}) => {
   return (
     <div className="workout">
       <h2 className="date">
         { formatDate(workout.date) }
+        <button onClick={() => editWorkout(workout)}>
+          Edit
+        </button>
       </h2>
       {
         // Sort exercises by exercise_id, and render each one

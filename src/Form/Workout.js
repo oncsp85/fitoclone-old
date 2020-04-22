@@ -10,56 +10,68 @@ const Workout = ({ workout, updateSingleExercise, deleteExercise,
   minDate.setMonth(minDate.getMonth() - 1);
   minDate = minDate.toISOString().substring(0, 10);
   const [ date, changeDate ] = useState(
-    workout.date ? workout.date : today
+    workout.date ? workout.date.substring(0, 10) : today
   );
 
   const submitWorkout = async () => {
-    // Count the number of workouts on the same day to get the workoutID
-    const workoutDate = new Date(date);
-    const url = "http://localhost:3001/workouts?" +
-    `day=${workoutDate.getDate()}` + 
-    `&month=${workoutDate.getMonth()+1}` +
-    `&year=${workoutDate.getFullYear()}`;
-    const numberOfWorkouts = await fetch(url)
-      .then(response => response.json())
-      .then(workouts => workouts.length);
-
     const exercises = [ ...workout.exercises ];
-    
+    // Convert hours/mins/secs into a single time property & remove field lists
     exercises.forEach(exercise => {
-      // If exercise has hours/mins/secs, convert to a single time property
-      if ("hours" in exercise.sets[0]) {
+      if (exercise.type==="cardio") {
         exercise.sets.forEach(set => {
           const time = Number(set["hours"]) * 3600 
             + Number(set["mins"]) * 60 + Number(set["secs"]);
-          set["time"] = time;
+          set.time = time;
           delete set.hours;
           delete set.mins;
           delete set.secs;
         });
       }
-    
-      // Remove the field lists from the exercise object
       delete exercise.required;
       delete exercise.optional;
     });
 
-    // Make a new workout object from the exercises array in state
-    const output = {
-      ...workout,
-      ...{
+    // _id is added by MongoDB, if it doesn't exist it means the workout is new
+    if (!workout._id) {
+      // Count the number of workouts on the same day to get the workoutID
+      const workoutDate = new Date(date);
+      const url = "http://localhost:3001/workouts?" +
+      `day=${workoutDate.getDate()}` + 
+      `&month=${workoutDate.getMonth()+1}` +
+      `&year=${workoutDate.getFullYear()}`;
+      const numberOfWorkouts = await fetch(url)
+        .then(response => response.json())
+        .then(workouts => workouts.length);
+
+      // Make a new workout object from the exercises array in state
+      const output = {
         workout_id: numberOfWorkouts + 1,
         date: date,
         exercises: exercises
-      }
-    };
-
-    // Pass workout to API, wait for a response, then redirect to workout view
-    await fetch("http://localhost:3001/workouts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(output)
-    }).then(() => changeRoute("show"));
+      };
+      // Pass workout to API, wait for a response, then redirect to workout view
+      await fetch("http://localhost:3001/workouts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(output)
+      }).then(() => changeRoute("show"));
+    }
+    // If there is an _id field, it's an existing workout and we need to update
+    else {
+      const output = {
+        ...workout,
+        ...{
+          date: date,
+          exercises: exercises
+        }
+      };
+      // Pass workout to API, wait for a response, then redirect to workout view
+      await fetch(`http://localhost:3001/workouts/${output._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(output)
+      }).then(() => changeRoute("show"));
+    }
   }
 
   // FOR TESTING WITHOUT CONNECTING TO DB, REMOVE LATER
@@ -122,7 +134,7 @@ const Workout = ({ workout, updateSingleExercise, deleteExercise,
         }
         <br />
         <button type="button"
-          onClick={ submitWorkout2 }  // CHANGE BACK TO submitWorkout WHEN DONE TESTING
+          onClick={ submitWorkout }  // CHANGE BACK TO submitWorkout WHEN DONE TESTING
         >Submit Workout</button>
       </form>
     </div>

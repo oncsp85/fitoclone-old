@@ -2,7 +2,7 @@ import React from 'react'
 import './WorkoutList.css';
 import Workout from "../Workout/Workout"
 
-const WorkoutList = ({workouts, currentDate}) => {
+const WorkoutList = ({workouts, currentDate, editWorkout}) => {
   const output = [
     <h1 key={"dateheader"}> 
       { 
@@ -24,6 +24,7 @@ const WorkoutList = ({workouts, currentDate}) => {
         <Workout 
           workout={workout}
           key={workout.date + workout.workout_id}
+          editWorkout={editWorkout}
         />
       );
       return null;

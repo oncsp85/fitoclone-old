@@ -4,8 +4,8 @@ import WorkoutList from '../WorkoutList/WorkoutList';
 import './WorkoutView.css';
 
 class WorkoutView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const today = new Date();
     this.state = {
       currentDate: today,
@@ -53,6 +53,7 @@ class WorkoutView extends React.Component {
         <WorkoutList 
           workouts={this.state.workouts}
           currentDate={this.state.currentDate}
+          editWorkout={this.props.editWorkout}
         />
         <WorkoutSelector
           lastClickedYear = {this.state.lastClickedYear}
