@@ -11,27 +11,27 @@ function App() {
   const [ workout, changeWorkout ] = useState(null);
 
   const editWorkout = w => {
-    const exercises = [...w.exercises];
-    exercises.forEach(exercise => {
-      // We need to add back the "required" and "optional" fieldlists
-      const template = fieldList.find(f => f.name === exercise.name);
-      exercise.required = template.required;
-      exercise.optional = template.optional;
+      const exercises = [...w.exercises];
+      exercises.forEach(exercise => {
+        // We need to add back the "required" and "optional" fieldlists
+        const template = fieldList.find(f => f.name === exercise.name);
+        exercise.required = template.required;
+        exercise.optional = template.optional;
 
-      // Convert "time" properties back to separate hour/min/sec properties
-      if (exercise.type==="cardio") {
-        exercise.sets.forEach(set => {
-          let time = set.time;
-          set.hours = Math.floor(time / 3600);
-          time %= 3600;
-          set.mins = Math.floor(time / 60);
-          set.secs = time % 60;
-          delete set.time;
-        })
-      }
-    });
-    changeWorkout({...w, ...{exercises: exercises}});
-    changeRoute("edit");
+        // Convert "time" properties back to separate hour/min/sec properties
+        if (exercise.type==="cardio") {
+          exercise.sets.forEach(set => {
+            let time = set.time;
+            set.hours = Math.floor(time / 3600);
+            time %= 3600;
+            set.mins = Math.floor(time / 60);
+            set.secs = time % 60;
+            delete set.time;
+          })
+        }
+      });
+      changeWorkout({...w, ...{exercises: exercises}});
+      changeRoute("edit");
   }
   
   let display;

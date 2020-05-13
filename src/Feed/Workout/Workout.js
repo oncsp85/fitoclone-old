@@ -21,13 +21,19 @@ const formatTime = (time) => {
   );
 }
 
-const Workout = ({workout, editWorkout}) => {
+
+
+const Workout = ({ workout, editWorkout, deleteWorkout }) => {
+
   return (
     <div className="workout">
       <h2 className="date">
         { formatDate(workout.date) }
-        <button onClick={() => editWorkout(workout)}>
+        <button onClick={ () => editWorkout(workout) }>
           Edit
+        </button>
+        <button onClick={ () => deleteWorkout(workout._id) }>
+          Delete
         </button>
       </h2>
       {

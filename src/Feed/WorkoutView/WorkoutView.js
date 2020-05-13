@@ -35,6 +35,15 @@ class WorkoutView extends React.Component {
       });
   }
 
+  deleteWorkout = workout_id => {
+    fetch(`http://localhost:3001/workouts/${workout_id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }})
+      .then(() => {
+        this.fetchWorkouts();
+      });
+  };
+
   // Change the currentDate to the just-clicked month and the last-clicked 
   // year, and fetch the workouts from this new date.
   changeCurrentMonth = (month) => {
@@ -54,6 +63,7 @@ class WorkoutView extends React.Component {
           workouts={this.state.workouts}
           currentDate={this.state.currentDate}
           editWorkout={this.props.editWorkout}
+          deleteWorkout={this.deleteWorkout}
         />
         <WorkoutSelector
           lastClickedYear = {this.state.lastClickedYear}
